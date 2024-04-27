@@ -16,16 +16,7 @@ class ViewCanvas : public gui::Canvas
 {
 protected:
     gui::Shape _shapeRect;
-   /* gui::Shape _shapeCircle;
-    gui::Shape _shapeRoundRect;
-    gui::Shape _shapePolygon;
-    gui::Shape _shapePolyLine;
-    gui::Shape _shapePie;
-    gui::Shape _shapeArc;
-    gui::Shape _shapeOval;
-    gui::Shape _shapeLines;
-    gui::Image _img;
-    gui::Image _img2;*/
+
     gui::Symbol _symbol;
     gui::Symbol _symbol2;
     gui::Symbol _symbol3;
@@ -36,68 +27,33 @@ protected:
     gui::Symbol _symbol8;
     gui::Symbol _symbol9;
     gui::Symbol _symbol10;*/
-    //gui::DrawableString _drawableString;
 
+    gui::Size _size;
     int _option;
 public:
     ViewCanvas()
-    : Canvas({gui::InputDevice::Event::PrimaryClicks, gui::InputDevice::Event::SecondaryClicks/*, gui::InputDevice::Event::Zoom*/} )
-    /*, _img(":TransCost")
-    , _img2(":zoomIn")*/
+    : Canvas({gui::InputDevice::Event::PrimaryClicks, gui::InputDevice::Event::SecondaryClicks, gui::InputDevice::Event::Zoom})
     , _symbol(":y0y0")
     , _symbol2(":y0d11")
     , _symbol3(":y0d7")
     , _symbol4(":y0y6")
     , _symbol5(":y0d5")
     , _symbol6(":y0d1")
-        /*    , _drawableString("Ovo se ispisuje iz klase DrawableString! Za demonstraciju je nesto duzi...")*/
     {
-        gui::Rect r(0, 0, 2000, 2000);
+        gui::Rect r(0, 0, 600, 200);
         float lw = 5;
         _shapeRect.createRect(r, lw);
 
         _option = 0;
         setScale(1.5);
-        /*gui::Circle c(300, 300, 70);
-        lw = 10;
-        _shapeCircle.createCircle(c, lw, td::LinePattern::Dash);
-        r.translate(200, 0);
-        _shapeRoundRect.createRoundedRect(r, 20);
-        
-        gui::Point points[] = {{0,0}, {100, 50}, {30,150}, {-10, 50}};
-        math::translate(&points[0], 4, 100.0, 300.0);
-        lw = 4;
-        _shapePolyLine.createPolyLine(&points[0], 4, lw, td::LinePattern::DashDot);
-        
-        math::translate(&points[0], 4, 300.0, 0.0);
-        lw = 7;
-        _shapePolygon.createPolygon(&points[0], 4, lw);
-        
-        c.translate(0, 100);
-        float fromAngle = 0;
-        float toAngle = 90;
-        lw = 4;
-        _shapePie.createPie(c, fromAngle, toAngle, lw);
-        
-        c.translate(-100, 0);
-        _shapeArc.createArc(c, fromAngle, toAngle, lw);
-        
-        r.translate(200, 150);
-        lw = 5;
-        _shapeOval.createOval(r, lw);
-        points[0] = {200, 10};
-        points[1] = {600, 10};
-        points[2] = {200, 20};
-        points[3] = {600, 20};
-        
-        lw = 4;
-        _shapeLines.createLines(&points[0], 4, lw, td::LinePattern::DashDot);*/
+
+        enableResizeEvent(true);
     }
     
     bool getModelSize(gui::Size& modelSize) const override
     {
-        modelSize.width = 1300;
-        modelSize.height = 550;
+        modelSize.width = 600;
+        modelSize.height = 200;
         return true;
     }
     
@@ -106,16 +62,8 @@ public:
         double scale = 2;
         double oldScale = getScale();
         double newScale = oldScale * scale;
-        //gui::Point modelPoint(300,300);
         const gui::Point& modelPoint = inputDevice.getModelPoint();
         scaleToPoint(newScale, modelPoint);
-        
-//        const gui::Point& modelPoint = inputDevice.getModelPoint();
-//        double scale = 2;
-//        double oldScale = getScale();
-//        double newScale = oldScale * scale;
-//        scaleToPoint(newScale, modelPoint);
-//        return true;
     }
     
     void onSecondaryButtonPressed(const gui::InputDevice& inputDevice) override
@@ -123,7 +71,6 @@ public:
         double scale = 2;
         double oldScale = getScale();
         double newScale = oldScale / scale;
-        //gui::Point modelPoint(300,300);
         const gui::Point& modelPoint = inputDevice.getModelPoint();
         scaleToPoint(newScale, modelPoint);
     }
@@ -132,26 +79,17 @@ public:
     {
         auto& modelPoint = inputDevice.getModelPoint();
         double scale = inputDevice.getScale();
-        //scale = 2;
         double oldScale = getScale();
         double newScale = oldScale * scale;
         scaleToPoint(newScale, modelPoint);
         return true;
     }
-    
-//    virtual void onClick(const gui::Point& modelPoint, td::UINT4 keyModifiers)
-//    {
-//        double scale = getScale();
-//        scale *= 1.2;
-//        setScale(scale);
-//    }
-//
-//    virtual void onRightMouseDown(const gui::Point& modelPoint, td::UINT4 keyModifiers)
-//    {
-//        double scale = getScale();
-//        scale /= 1.2;
-//        setScale(scale);
-//    }
+
+    void onResize(const gui::Size& newSize) override
+    {
+        _size = newSize;
+    }
+
     void updateOption(int input) {
         _option = input;
         reDraw();
@@ -160,141 +98,7 @@ public:
     void onDraw(const gui::Rect& rect) override
     {
         _shapeRect.drawFillAndWire(td::ColorID::Black, td::ColorID::Black);
-
-        gui::Rect imgRect(0, 0, 650, 350);
-        imgRect.translate(210, 0);
-        
-        //setScale(5);
-        //_imarray.at(_option).draw(imgRect, gui::Image::AspectRatio::Keep, td::HAlignment::Left);
-        _syarray.at(_option).draw(50, 20);
-        /*double scale = getScale();
-                scale *= 1.2;
-                setScale(scale);*/
-
-        /*gui::Rect symbolRect(100, 150, 200, 300);
-        _symbol.drawInRect(symbolRect);
-
-        symbolRect.translate(70, 0);
-        _symbol.drawInRect(symbolRect, 0, gui::Symbol::getDefaultSymbolAttribs());
-
-        gui::Rect rectForDrawableStr(500, 420, 600, 470);
-        gui::Shape shRectTxt;
-        shRectTxt.createRect(rectForDrawableStr, 1, td::LinePattern::Dot);
-
-        shRectTxt.drawWire(td::ColorID::Yellow);
-        _drawableString.draw(rectForDrawableStr, gui::Font::ID::SystemNormal, td::ColorID::Orange, td::TextAlignment::Left); */
-
-
-        /*switch (_option) {
-        case 0: 
-            _img.draw(imgRect, gui::Image::AspectRatio::Keep, td::HAlignment::Left);
-            
-            break;
-        case 1: 
-            imgRect.translate(210, 0);
-            _img.draw(imgRect, gui::Image::AspectRatio::No, td::HAlignment::Left);
-            
-            break;
-        default: break;
-        }*/
-
-        /*
-        _shapeCircle.drawWire(td::ColorID::DarkBlue);
-        _shapeRoundRect.drawFill(td::ColorID::DarkGreen);
-        _shapePolyLine.drawWire(td::ColorID::DarkRed);
-        _shapePolygon.drawFillAndWire(td::ColorID::Yellow, td::ColorID::DarkOliveGreen);
-        _shapePie.drawFillAndWire(td::ColorID::DarkCyan, td::ColorID::DarkGray);
-        _shapeArc.drawFillAndWire(td::ColorID::DarkCyan, td::ColorID::DarkGray);
-        _shapeOval.drawFillAndWire(td::ColorID::Pink, td::ColorID::DarkMagenta);
-        _shapeLines.drawWire(td::ColorID::DarkOrange);*/
-        
-        //rect is wider
-        {
-            //gui::Rect imgRect(450, 50, 650, 150);
-            //_img.draw(imgRect, gui::Image::AspectRatio::No); //no
-            //gui::Shape::drawRect(imgRect, td::ColorID::Blue, 2, td::LinePattern::Dot);
-            //
-            //imgRect.translate(210, 0);
-            //_img.draw(imgRect, gui::Image::AspectRatio::Keep, td::HAlignment::Left);
-            //gui::Shape::drawRect(imgRect, td::ColorID::Blue, 2, td::LinePattern::Dot);
-            //
-            //imgRect.translate(210, 0);
-            //_img.draw(imgRect, gui::Image::AspectRatio::Keep, td::HAlignment::Center);
-            //gui::Shape::drawRect(imgRect, td::ColorID::Blue, 2, td::LinePattern::Dot);
-            //
-            //imgRect.translate(210, 0);
-            //_img.draw(imgRect, gui::Image::AspectRatio::Keep, td::HAlignment::Right);
-            //gui::Shape::drawRect(imgRect, td::ColorID::Blue, 2, td::LinePattern::Dot);
-        }
-        
-        //rect is higher
-        {
-            //gui::Rect imgRect(650, 160, 750, 400);
-            //_img.draw(imgRect, gui::Image::AspectRatio::No); //no
-            //gui::Shape::drawRect(imgRect, td::ColorID::Blue, 2, td::LinePattern::Dot);
-            //
-            //imgRect.translate(110, 0);
-            //_img.draw(imgRect, gui::Image::AspectRatio::Keep, td::HAlignment::Left, td::VAlignment::Top);
-            //gui::Shape::drawRect(imgRect, td::ColorID::Blue, 2, td::LinePattern::Dot);
-            //
-            //imgRect.translate(110, 0);
-            //_img.draw(imgRect, gui::Image::AspectRatio::Keep, td::HAlignment::Left, td::VAlignment::Center);
-            //gui::Shape::drawRect(imgRect, td::ColorID::Blue, 2, td::LinePattern::Dot);
-            //
-            //imgRect.translate(110, 0);
-            //_img.draw(imgRect, gui::Image::AspectRatio::Keep, td::HAlignment::Left, td::VAlignment::Bottom);
-            //gui::Shape::drawRect(imgRect, td::ColorID::Blue, 2, td::LinePattern::Dot);
-            
-        }
-        
-       /* _symbol.draw(50, 520);
-        
-        gui::Rect symbolRect(100, 150, 200, 300);
-        _symbol.drawInRect(symbolRect);
-        
-        symbolRect.translate(70, 0);
-        _symbol.drawInRect(symbolRect, 0, gui::Symbol::getDefaultSymbolAttribs());
-        
-        gui::Rect rectForDrawableStr(500, 420, 600, 470);
-        gui::Shape shRectTxt;
-        shRectTxt.createRect(rectForDrawableStr, 1, td::LinePattern::Dot);
-        
-        shRectTxt.drawWire(td::ColorID::Yellow);
-        _drawableString.draw(rectForDrawableStr, gui::Font::ID::SystemNormal, td::ColorID::Orange, td::TextAlignment::Left);*/
-       
-       //draw rotated string
-       {
-           /*gui::Context ctx;
-           gui::Transformation tr;
-           tr.translate(rectForDrawableStr.left, rectForDrawableStr.top);
-           tr.rotateDeg(-90);
-           tr.appendToContext();
-           gui::Rect rect2(0,0, 100, 100);
-           _drawableString.draw(rect2, gui::Font::ID::SystemNormal, td::ColorID::Orange);*/
-       }
-        
-//        gui::Point ptTransl(120, 0);
-//        rectForDrawableStr.translate(ptTransl);
-////        gui::Shape shRectTxt2;
-////        shRectTxt2.createRect(rectForDrawableStr, 1, td::LinePattern::Dot);
-//        shRectTxt.translateRectNodes(ptTransl);
-//        shRectTxt.drawWire(td::ColorID::Yellow);
-//        _drawableString.draw(rectForDrawableStr, gui::Font::ID::SystemNormal, td::ColorID::Blue, td::TextAlignment::Center);
-//        
-//        rectForDrawableStr.translate(ptTransl);
-////        gui::Shape shRectTxt3;
-////        shRectTxt3.createRect(rectForDrawableStr, 1, td::LinePattern::Dot);
-//        shRectTxt.translateRectNodes(ptTransl);
-//        shRectTxt.drawWire(td::ColorID::Yellow);
-//        _drawableString.draw(rectForDrawableStr, gui::Font::ID::SystemNormal, td::ColorID::Magenta, td::TextAlignment::Right);
-//        
-//        rectForDrawableStr.translate(ptTransl);
-////        gui::Shape shRectTxt3;
-////        shRectTxt3.createRect(rectForDrawableStr, 1, td::LinePattern::Dot);
-//        shRectTxt.translateRectNodes(ptTransl);
-//        shRectTxt.drawWire(td::ColorID::Yellow);
-//        _drawableString.draw(rectForDrawableStr, gui::Font::ID::SystemNormal, td::ColorID::Green, td::TextAlignment::Justified);
-        
+        _syarray.at(_option).draw(_size.width*0.22, _size.height*0.15);
     }
     
     void toolbarZoomIn()
@@ -311,9 +115,6 @@ public:
         setScale(scale);
     }
 
-
-    //std::vector<gui::Image> _imarray{_img, _img2};
     std::vector<gui::Symbol> _syarray{_symbol, _symbol2, _symbol3, _symbol4, _symbol5, _symbol6};
-
 
 };

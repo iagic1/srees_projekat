@@ -7,8 +7,8 @@
 #include "ViewGrid.h"
 #include "ViewCanvas.h"
 #include "ScrolledCanvasView.h"
-#include "ViewVert.h"
-#include "ViewHoriz.h"
+#include "ThreePhaseTransf.h"
+#include "OnePhaseTransf.h"
 
 class SwitcherView : public gui::ViewSwitcher
 {
@@ -17,8 +17,8 @@ protected:
     ViewGrid _viewGrid;
     ViewCanvas _viewCanvas;
     ScrolledCanvasView _viewScrolledCanvas;
-    ViewVert _viewVert;
-    ViewHoriz _viewHoriz;
+    ThreePhaseTransf _ThreePhaseTransf;
+    OnePhaseTransf _viewHoriz;
     int _viewPos = 0;
 public:
     SwitcherView()
@@ -27,8 +27,8 @@ public:
         addView(&_viewGrid, true);
         addView(&_viewCanvas, false);
         addView(&_viewScrolledCanvas, false);
-        addView(&_viewVert, false);
         addView(&_viewHoriz, false);
+        addView(&_ThreePhaseTransf, false);
     }
     
     std::tuple<int, int> showPrev(gui::ActionItem* pAI)
