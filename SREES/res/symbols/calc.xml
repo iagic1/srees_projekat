@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+	<Symbol name="BreakerRectClosed" type="NConnectionsOneGroup">
+		<Connections>
+			<Point x="0" y="0"/>
+			<Point x="5" y="0"/>
+		</Connections>
+		<Group name="G0">
+			<Polygon fillColor="#000000" drawLine="true"lineWidth="1" lineStyle="Solid" lineColor="SysText">
+			<Point x="5" y="0"/>
+			<Point x="40" y="0"/>
+			<Point x="40" y="55"/>
+			<Point x="5" y="55"/>
+			</Polygon>
+			<Polygon fillColor="#000000" drawLine="true" lineWidth="1" lineStyle="Solid" lineColor="SysText">
+			<Point x="10" y="5"/>
+			<Point x="35" y="5"/>
+			<Point x="35" y="20"/>
+			<Point x="10" y="20"/>
+			</Polygon>
+		</Group>
+		<Group name="G2">
+			<Polygon fillColor="#000000" drawLine="true" lineWidth="1" lineStyle="Solid" lineColor="SysText">
+			<Point x="10" y="25"/>
+			<Point x="20" y="25"/>
+			<Point x="20" y="35"/>
+			<Point x="10" y="35"/>
+			</Polygon>
+		</Group>
+		<Group name="G3">
+			<Polygon fillColor="#000000" drawLine="true" lineWidth="1" lineStyle="Solid" lineColor="SysText">
+			<Point x="25" y="25"/>
+			<Point x="35" y="25"/>
+			<Point x="35" y="35"/>
+			<Point x="25" y="35"/>
+			</Polygon>
+		</Group>
+		<Group name="G4">
+			<Polygon fillColor="#000000" drawLine="true" lineWidth="1" lineStyle="Solid" lineColor="SysText">
+			<Point x="10" y="40"/>
+			<Point x="20" y="40"/>
+			<Point x="20" y="50"/>
+			<Point x="10" y="50"/>
+			</Polygon>
+		</Group>
+		<Group name="G5">
+			<Polygon fillColor="#000000" drawLine="true" lineWidth="1" lineStyle="Solid" lineColor="SysText">
+			<Point x="25" y="40"/>
+			<Point x="35" y="40"/>
+			<Point x="35" y="50"/>
+			<Point x="25" y="50"/>
+			</Polygon>
+		</Group>
+</Symbol>

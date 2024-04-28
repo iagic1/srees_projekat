@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Symbol name="ThreeWindingTransformer" type="OneConnectionOneGroup">
+	<Group name="Terciary" x="0" y="20">
+		<Circle x="0" y="7" r="13" lineWidth="1" lineStyle="Solid" lineColor="SysText"/>
+		<AttachedSymbols>
+		<Symbol name="Connection_Type" x="0" y="12" rotate="false"/>
+		<Symbol name="LTC" x="0" y="7" rotate="true"/>
+		<Symbol name="Controlled_Side" x="0" y="17" rotate="true"/>
+		</AttachedSymbols>
+	</Group>
+	<Group name="Lin" x="0" y="20">
+		<Lines lineWidth="1" lineStyle="Solid" lineColor="SysText">
+			<Line x1="-45" y1="7" x2="45" y2="7"/>	
+		</Lines>
+	</Group>
+</Symbol>
