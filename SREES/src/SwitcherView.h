@@ -1,34 +1,35 @@
-//
+ //
 //  Created by Izudin Dzafic on 28/07/2020.
 //  Copyright © 2020 IDz. All rights reserved.
 //
 #pragma once
 #include <gui/ViewSwitcher.h>
+#include "ViewFormulas.h"
+#include "ViewTransformators.h"
 #include "ViewGrid.h"
-#include "ViewCanvas.h"
-#include "ScrolledCanvasView.h"
 #include "ThreePhaseTransf.h"
 #include "OnePhaseTransf.h"
+#include "WelcomeScreen.h"
 
 class SwitcherView : public gui::ViewSwitcher
 {
 private:
 protected:
-    ViewGrid _viewGrid;
-    ViewCanvas _viewCanvas;
-    ScrolledCanvasView _viewScrolledCanvas;
+    ViewFormulas _ViewFormulas;
+    WelcomeScreen _WelcomeScreen;
+    ViewGrid _ViewGrid;
     ThreePhaseTransf _ThreePhaseTransf;
-    OnePhaseTransf _viewHoriz;
+    OnePhaseTransf _OnePhaseTransf;
     int _viewPos = 0;
 public:
     SwitcherView()
     : gui::ViewSwitcher(3)
     {
-        addView(&_viewGrid, true);
-        addView(&_viewCanvas, false);
-        addView(&_viewScrolledCanvas, false);
-        addView(&_viewHoriz, false);
+        addView(&_WelcomeScreen, true);
+        addView(&_ViewGrid, false);
+        addView(&_OnePhaseTransf, false);
         addView(&_ThreePhaseTransf, false);
+        addView(&_ViewFormulas, false);
     }
     
     std::tuple<int, int> showPrev(gui::ActionItem* pAI)

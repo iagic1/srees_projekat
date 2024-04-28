@@ -4,14 +4,13 @@
 //
 #pragma once
 #include <gui/ViewScroller.h>
-#include "ViewCanvas.h"
+#include "ViewFormulasCanvas.h"
 
 class ScrolledCanvasView : public gui::ViewScroller
 {
 private:
 protected:
-    ViewCanvas _canvas;
-protected:
+    ViewFormulasCanvas _canvas;
 
 public:
     ScrolledCanvasView()
@@ -20,8 +19,12 @@ public:
         setContentView(&_canvas);
     }
     
-    ViewCanvas& getView()
+    ViewFormulasCanvas& getView()
     {
         return _canvas;
+    }
+
+    void updateOption(int input) {
+        _canvas.updateOption(input);
     }
 };

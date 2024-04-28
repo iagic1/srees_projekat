@@ -25,10 +25,38 @@ class ViewGrid : public gui::View
 private:
 protected:
     gui::Label _lbl;
-    gui::LineEdit _lineEdit;
     gui::Label _lbl2;
+    gui::Label _lbl3;
+    gui::ComboBox _comboBox;
+    gui::ComboBox _comboBox2;
+    gui::ComboBox _comboBox3;
+
+    gui::Label _lbl4;
+    gui::Label _lbl5;
+    gui::Label _lbl6;
+    gui::NumericEdit _f;
+    gui::NumericEdit _r;
+    gui::NumericEdit _d;
+
+    gui::Button _btn;
+    gui::Button _btn1;
+    gui::Button _btn2;
+    gui::Button _btn3;
+
+    gui::Label _R;
+    gui::Label _M;
+    gui::Label _R2;
+    gui::Label _M2;
+
+    gui::Label _lbl7;
+    gui::Label _lbl8;
+    gui::Label _lbl9;
+    gui::NumericEdit _ro;
+    gui::NumericEdit _l;
+    gui::NumericEdit _s;
+
+    gui::LineEdit _lineEdit;
     gui::LineEdit _lineEdit2;
-    gui::Label _lblKol;
     gui::NumericEdit _kol;
     gui::Label _lblCij;
     gui::NumericEdit _cij;
@@ -40,23 +68,52 @@ protected:
     gui::Slider _slider;
     gui::ProgressIndicator _progIndicator;
     gui::Label _lblCB;
-    gui::ComboBox _comboBox;
     gui::Label _lblDate;
     gui::DateEdit _date;
     gui::Label _lblTime;
     gui::TimeEdit _time;
     //gui::Label _lbl3;
     gui::HorizontalLayout _hl;
-    gui::Button _btnGetText;
     gui::Button _btnClearText;
     gui::Button _btnGetDT;
     gui::TextEdit _textEdit;
+
+
+
+
     gui::GridLayout _gl;
+    gui::GridLayout _gl1;
+    gui::GridLayout _gl2;
+
+    td::Decimal4 ks, kp;
+    td::Decimal4 Rdc;
+
 public:
     ViewGrid()
-    : _lbl("First lbl:")
-    , _lbl2("Second lbl:")
-    , _lblKol("Kolicina:")
+    : _lbl("Materijal provodnika: ")
+    , _lbl2("Tip provodnika: ")
+    , _lbl3("Suha impregnirana izolacija: ")
+    , _lbl4("Frekvencija napajanja [Hz]: ")
+    , _lbl5("Poluprečnik provodnika [mm]: ")
+    , _lbl6("Udaljenost između osa poluprovodnika [mm]: ")
+    , _lbl7("Specifična otpornost provodnika: ")
+    , _lbl8("Dužina provodnika: ")
+    , _lbl9("Površina poprečnog presjeka provodnika: ")
+    , _r(td::decimal4, gui::LineEdit::Messages::Send)
+    , _d(td::decimal4, gui::LineEdit::Messages::Send)
+    , _f(td::decimal4, gui::LineEdit::Messages::Send)
+    , _ro(td::decimal4, gui::LineEdit::Messages::Send)
+    , _l(td::decimal4, gui::LineEdit::Messages::Send)
+    , _s(td::decimal4, gui::LineEdit::Messages::Send)
+    , _btn("Izračunaj")
+    , _btn1("Izračunaj")
+    , _btn2("Izračunaj")
+    , _btn3("Izračunaj")
+    , _R("Proračun otpora provodnika za istosmjernu struju")
+    , _M("Model prenosne linije sa raspodijeljenim parametrima")
+    , _R2("Proračun otpora provodnika za izmjeničnu struju")
+    , _M2("Model prenosne linije sa koncentrisanim parametrima")
+
     , _kol(td::decimal3, gui::LineEdit::Messages::Send)
     , _lblCij("Cijena:")
     , _cij(td::decimal4, gui::LineEdit::Messages::Send)
@@ -69,121 +126,80 @@ public:
     , _lblDate("Datum:")
     , _lblTime("Vrijeme:")
     , _hl(4)
-    , _btnGetText("Daj text")
+    
     , _btnClearText("Brisi")
     , _btnGetDT("Date&Time->TE")
-    //, _lbl3("Label for text edit:")
-    , _gl(8,4)
+    , _gl(18, 8)
+    , _gl1(16, 3)
+    , _gl2(1, 2)
     {
-//        _lineEdit.enableMessaging();
-//        _lineEdit2.enableMessaging();
-        _lineEdit.setToolTip("Ovo je tooltip");
-        _lineEdit2.setToolTip("Ovo je drugi tooltip....");
-        _textEdit.setToolTip("Ovo je text edit za log");
-        _iznos.setAsReadOnly();
-        _comboBox.addItem("Kafa");
-        _comboBox.addItem("Sypa");
-        _comboBox.addItem("Neki artikal");
+        _comboBox.addItem("-");
+        _comboBox.addItem("Bakar");
+        _comboBox.addItem("Aluminijum");
         _comboBox.selectIndex(0);
         
-        _btnGetText.setAsDefault();
+        _gl.insert(0, 0, _R, 3); _gl.insert(0, 3, _btn);
+        _gl.insert(1, 0, _lbl7); _gl.insert(1, 1, _ro);
+        _gl.insert(2, 0, _lbl8); _gl.insert(2, 1, _l);
+        _gl.insert(3, 0, _lbl9); _gl.insert(3, 1, _s);
+        _gl.insert(4, 0, _R2, 3); _gl.insert(4, 3, _btn1);
+        _gl.insert(5, 0, _lbl); _gl.insert(5, 1, _comboBox); _gl.insert(5, 2, _lbl4); _gl.insert(5, 3, _f);
+        _gl.insert(6, 0, _lbl2); _gl.insert(6, 1, _comboBox2); _gl.insert(6, 2, _lbl5); _gl.insert(6, 3, _r);
+        _gl.insert(7, 0, _lbl3); _gl.insert(7, 1, _comboBox3); _gl.insert(7, 2, _lbl6); _gl.insert(7, 3, _d);
         
-        _gl.insert(0,0, _lbl);
-        _gl.insert(0,1, _lineEdit);
-        _gl.insert(0,2, _lbl2);
-        _gl.insert(0,3, _lineEdit2);
-        _gl.insert(1,0, _lblKol);
-        _gl.insert(1,1, _kol);
-        _gl.insert(1,2, _lblCij);
-        _gl.insert(1,3, _cij);
-        _gl.insert(2,0, _lblIzn);
-        _gl.insert(2,1, _iznos);
-        _gl.insert(2,2, _lblKupiti);
-        _gl.insert(2,3, _cbKupiti);
-        _gl.insert(3,0, _lblSlider);
-        _gl.insert(3,1, _slider);
-        _gl.insert(3,2, _progIndicator, -1);
-        _gl.insert(4,0, _lblCB);
-        _gl.insert(4,1, _comboBox);
-        _gl.insert(5,0, _lblDate);
-        _gl.insert(5,1, _date);
-        _gl.insert(5,2, _lblTime);
-        _gl.insert(5,3, _time);
+
+        _gl.insert(9, 0, _M, 3); _gl.insert(9, 3, _btn2);
+
+       // _gl.insert(7, 0, _textEdit);
         
-        _hl.append(_btnGetDT);
-        _hl.appendSpacer();
-        _hl.append(_btnClearText);
-        _hl.append(_btnGetText);
-        
-        _gl.insert(6,0, _hl, -1);
-        _gl.insert(7,0, _textEdit, -1);
+        _gl2.insert(0, 0, _gl); _gl2.insert(0, 1, _gl1);
+
         gui::View::setLayout(&_gl);
+        gui::View::setLayout(&_gl1);
+        gui::View::setLayout(&_gl2);
     }
     
-    bool onBeginEdit(gui::LineEdit* pCtrl) override
+    bool onClick(gui::Button* pBtn) override
     {
-        _textEdit.appendString("Begin edit!");
-        mu::dbgLog("Begin Edit");
-        return true;
-    }
-    
-    bool onFinishEdit(gui::LineEdit* pCtrl) override
-    {
-        _textEdit.appendString("End edit: ");
-//        td::String strVal(pCtrl->getText());
-//        _textEdit.appendString(strVal);
-//        _textEdit.appendString("\t");
-        mu::dbgLog("End Edit");
-        if (pCtrl == &_kol || pCtrl == &_cij)
+        if (pBtn == &_btn)
         {
-            td::Variant kol = _kol.getValue();
-            td::Variant cij = _cij.getValue();
-            
-            td::Variant dblIznos = kol * cij;
-            td::Decimal2 dec2(dblIznos.r8Val());
-            
-            td::Variant iznos(dec2);
-            
-            _iznos.setValue(iznos);
-            td::Decimal2 maxIznos(100.0);
-            if (dec2 > maxIznos)
-            {
-                _lblIzn.setTitle("Veoma skup artikal:");
-                //_cbKupiti.setTitle("Ne kupovati");
+            if (_s.getValue().dec4Val() == 0) {
+                showAlert("Nemoguć proračun", "Površina poprečnog presjeka provodnika ne može biti 0!");
+                return true;
             }
-            else
-                _lblIzn.setTitle("Iznos ok:");
-                
-            return true;
+            // step1: Rdc
+            td::Decimal4 ro(_ro.getValue().dec4Val());
+            td::Decimal4 l(_l.getValue().dec4Val());
+            td::Decimal4 s(_s.getValue().dec4Val());
+            Rdc = ro * l / s;
         }
-        return false;
-    }
-    
-    bool onClick(gui::CheckBox* pCB) override
-    {
-        if (pCB== &_cbKupiti)
+        if (pBtn == &_btn1)
         {
-            bool isChecked = _cbKupiti.isChecked();
-            if (isChecked)
-            {
-                _textEdit.appendString(" Odabrano KUPITI ");
+            if (Rdc == 0) {
+                showAlert("Nemoguć proračun", "Za proračun otpora provodnika za izmjeničnu struju ovisi od otpora provodnika za istosmjernu struju!");
+                return true;
             }
-            else
-            {
-                _textEdit.appendString(" Odabrano NEKupiti ");
-            }
-            return true;
+            // step2: Rac
+            td::Decimal4 f(_f.getValue().dec4Val());
+            td::Decimal4 r(_r.getValue().dec4Val());
+            td::Decimal4 d(_d.getValue().dec4Val());
+
+            td::Decimal4 xp = ((8 * 3.14 * f * kp) / (Rdc * 10000000)) * ((8 * 3.14 * f * kp) / (Rdc * 10000000));
+            td::Decimal4 gama_p = (xp / (192 + 0.8 * xp)) * (2 * r / d) * (2 * r / d) * (0.312 * (2 * r / d) * (2 * r / d) + (1.18 / (0.27 + (xp / (192 + 0.8 * xp)))));
+            /*if (sqrt(xp.getAsFloat()) > 2.8) gama_p *= 2 / 3;*/
+
+            td::Decimal4 xs = ((8 * 3.14 * f * kp) / (Rdc * 10000000)) * ((8 * 3.14 * f * kp) / (Rdc * 10000000));
+            td::Decimal4 gama_s = (xs / (192 + 0.8 * xs));
+
+            td::Decimal4 Rac = Rdc * (1 + gama_s + gama_p);
         }
-        return false;
-    }
-    
-    bool onChangedValue(gui::Slider* pSlider) override
-    {
-        if (pSlider == &_slider)
+        if (pBtn == &_btn2)
         {
-            double val = _slider.getValue();
-            _progIndicator.setValue(val);
-            return true;
+            // step3: raspodijeljeni
+        }
+        if (pBtn == &_btn3)
+        {
+            // step4: koncentrisani
         }
         return false;
     }
@@ -192,42 +208,64 @@ public:
     {
         if (pCB == &_comboBox)
         {
-            td::String strSel = pCB->getSelectedText();
-            _textEdit.appendString(strSel);
-            return true;
+            switch (_comboBox.getSelectedIndex()) {
+                case 0: default:
+                    _comboBox2.clean();
+                    break;
+                case 1:
+                    _comboBox2.clean();
+                    _comboBox2.addItem("Upredeni, kružnog popr. presjeka");
+                    _comboBox2.addItem("Segmentirani kružnog popr. presjeka");
+                    _comboBox2.addItem("Sektorski");
+                    _comboBox2.selectIndex(0);
+                    break;
+                case 2:
+                    _comboBox2.clean();
+                    _comboBox2.addItem("Upredeni, kružnog popr. presjeka");
+                    _comboBox2.addItem("Segmentirani (4 seg.) kružnog popr. presjeka");
+                    _comboBox2.addItem("Segmentirani (5 seg.) kružnog popr. presjeka");
+                    _comboBox2.addItem("Segmentirani (6 seg.) kružnog popr. presjeka");
+                    _comboBox2.selectIndex(0);
+                    break;
+            }
+        }
+        if (pCB == &_comboBox2)
+        {
+            if (_comboBox.getSelectedIndex() == 1 && (_comboBox2.getSelectedIndex() == 0 || _comboBox2.getSelectedIndex() == 2)) {
+                _comboBox3.clean();
+                _comboBox3.addItem("Da");
+                _comboBox3.addItem("Ne");
+                _comboBox3.selectIndex(0);
+            }
+            else _comboBox3.clean();
+        }
+
+        switch (_comboBox.getSelectedIndex()) {
+            case 1:
+                switch (_comboBox2.getSelectedIndex()) {
+                    case 0: case 2:
+                        switch (_comboBox3.getSelectedIndex()) {
+                            case 0: ks = 1; kp = 0.8; break;
+                            case 1: ks = 1; kp = 1; break;
+                        }
+                        break;
+                    case 1: ks = 0.435; kp = 0.37; break;
+                }
+                break;
+            case 2:
+                switch (_comboBox2.getSelectedIndex()) {
+                    case 0: ks = 1; kp = 1; break;
+                    case 1: ks = 0.28; kp = 0.37; break;
+                    case 2: ks = 0.19; kp = 0.37; break;
+                    case 3: ks = 0.12; kp = 0.37; break;
+                }
+                break;
+            default:
+                break;
         }
         return false;
     }
     
-    bool onClick(gui::Button* pBtn) override
-    {
-        if (pBtn == &_btnGetText)
-        {
-           td::String str = _textEdit.getText();
-            const char* pStr = str.c_str();
-            int k=0;
-            ++k;
-            return true;
-        }
-        else if (pBtn == &_btnClearText)
-        {
-            _textEdit.clean();
-            return true;
-        }
-        else if (pBtn == &_btnGetDT)
-        {
-            td::Date dateVal = _date.getValue();
-            td::Time timeVal = _time.getValue();
-            
-            td::String strDate = dateVal.toString();
-            _textEdit.appendString(" Date=");
-            _textEdit.appendString(strDate);
-            td::String strTime = timeVal.toString();
-            _textEdit.appendString(" Time=");
-            _textEdit.appendString(strTime);
-            return true;
-        }
-        return false;
-    }
+    
     
 };

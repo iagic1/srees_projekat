@@ -30,11 +30,11 @@ public:
     , _navImg5(":settings")
     {
         setMargins(0,0,0,0);
-        _navigator.setItem(0, &_navImg1, "O nama");
-        _navigator.setItem(1, &_navImg2, "Kablovi");
-        _navigator.setItem(2, &_navImg4, "Nadzemni vodovi");
-        _navigator.setItem(3, &_navSymb3, "1F transformatori");
-        _navigator.setItem(4, &_navSymb3, "3F transformatori");
+        _navigator.setItem(0, &_navImg1, "Dobrodošli");
+        _navigator.setItem(1, &_navImg4, "Nadzemni vodovi i kablovi");
+        _navigator.setItem(2, &_navSymb3, "1F transformatori");
+        _navigator.setItem(3, &_navSymb3, "3F transformatori");
+        _navigator.setItem(4, &_navImg2, "Korištene formule");
         _hl.append(_navigator);
         
         //_imgView.setImage(_navImg1);

@@ -10,7 +10,7 @@
 #include <gui/TextEdit.h>
 #include <gui/Button.h>
 
-#include "ViewCanvas.h"
+#include "ViewTransformators.h"
 
 class ThreePhaseTransf : public gui::View
 {
@@ -70,27 +70,27 @@ protected:
     gui::Label _rez4;
     gui::TextEdit _Y;
 
-    ViewCanvas _viewCanvas;
+    ViewTransformators _ViewTransformators;
 public:
     ThreePhaseTransf()
     : _btn("Izračunaj")
     , _gl(16, 5)
-    , _gl1(16, 8)
+    , _gl1(16, 3)
     , _gl2(1, 2)
     , _izbor1("Odaberite konekciju:")
-    , _unos1("Nominalna snaga: ")
-    , _unos2("Nominalni linijski napon primara: ")
-    , _unos3("Nominalni linijski napon sekundara: ")
-    , _unos4("uk(%): ")
-    , _unos5("I0: ")
-    , _unos6("PPH: ")
-    , _unos7("PKS: ")
-    , _unos8("uk(%): ")
-    , _unos9("I0: ")
-    , _unos10("PPH: ")
-    , _unos11("PKS: ")
-    , _unos12("zg primara (ako ima): ")
-    , _unos13("zg sekundara (ako ima): ")
+    , _unos1("Nominalna snaga [VA]: ")
+    , _unos2("Nominalni linijski napon primara [V]: ")
+    , _unos3("Nominalni linijski napon sekundara [V]: ")
+    , _unos4("uk(%) [V]: ")
+    , _unos5("I0 [A]: ")
+    , _unos6("PPH [W]: ")
+    , _unos7("PKS [W]: ")
+    , _unos8("uk(%) [V]: ")
+    , _unos9("I0 [A]: ")
+    , _unos10("PPH [W]: ")
+    , _unos11("PKS [W]: ")
+    , _unos12("zg primara (ako ima) [Ohm]: ")
+    , _unos13("zg sekundara (ako ima) [Ohm]: ")
     , _check("Sa koje strane je vršen eksperiment - VF: ")
     , _poz("Pozitivna sekvenca")
     , _nul("Nulta sekvenca")
@@ -122,7 +122,7 @@ public:
         _pnz.setAsReadOnly();
         _pnz_sim.setAsReadOnly();
 
-        _gl.insert(0, 0, _viewCanvas, 4);
+        _gl.insert(0, 0, _ViewTransformators, 4);
         _gl.insert(1, 0, _izbor1, 2); _gl.insert(1, 2, _comboBox1, 2);
         _gl.insert(3, 0, _textEdit, 4);
 
@@ -145,13 +145,11 @@ public:
 
         _gl.insert(15, 0, _btn);
 
-      //  _gl1.insert(0, 0, _rez1); _gl1.insert(0, 1, _zs1); _gl1.insert(1, 2, _z0);
         _gl1.insert(0, 0, _rez1, 2); _gl1.insert(1, 0, _rez1_n); _gl1.insert(1, 1, _rez1_p);
         _gl1.insert(2, 0, _z0y0); _gl1.insert(2, 1, _z1y1);
         _gl1.insert(3, 0, _rez2); _gl1.insert(4, 0, _pnz);
         _gl1.insert(3, 1, _rez3); _gl1.insert(4, 1, _pnz_sim);
         _gl1.insert(5, 0, _rez4, 2); _gl1.insert(6, 0, _Y, 2);
-        //_gl1.insert(7, 0, _rez4, 2); _gl1.insert(8, 0, _Y, 2);
 
         _gl2.insert(0, 0, _gl); _gl2.insert(0, 1, _gl1);
         
@@ -174,7 +172,7 @@ public:
             _textEdit.appendString("\nNapomene:\n- Pretpostavljeno je zajedničko feromagnetno jezgro za sve namotaje primara i sekundara.");
             if (t.at(_comboBox1.getSelectedIndex()).id==3) _textEdit.appendString("\n- Crvena boja označava da presjek sa ostalim granama ne podrazumijeva njihov spoj!");
 
-            _viewCanvas.updateOption(_comboBox1.getSelectedIndex());
+            _ViewTransformators.updateOption(_comboBox1.getSelectedIndex());
             return true;
         }
         return false;

@@ -12,7 +12,7 @@
 #include <gui/Context.h>
 #include <gui/Transformation.h>
 
-class ViewTransformators : public gui::Canvas
+class ViewFormulasCanvas : public gui::Canvas
 {
 protected:
     gui::Shape _shapeRect;
@@ -31,7 +31,7 @@ protected:
     gui::Size _size;
     int _option;
 public:
-    ViewTransformators()
+    ViewFormulasCanvas()
     : Canvas({gui::InputDevice::Event::PrimaryClicks, gui::InputDevice::Event::SecondaryClicks, gui::InputDevice::Event::Zoom})
     , _symbol(":y0y0")
     , _symbol2(":y0d11")
