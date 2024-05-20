@@ -44,8 +44,8 @@ public:
         _textEdit.appendString("Dobrodošli!\n\n\n");
         _textEdit.appendString("Pomoć:\n\n");
         _textEdit.appendString("Nadzemni vodovi i kablovi - alat za proračun parametara nadzemnih vodova i kablova\n");
-        _textEdit.appendString("                          - otpor provodnika pri izmjeničnoj i istosmjernoj struji\n");
-        _textEdit.appendString("                          - modeli prenosne linije sa raspodijeljenim i koncentrisanim parametrima\n\n");
+        _textEdit.appendString("                                       - otpor provodnika pri izmjeničnoj i istosmjernoj struji\n");
+        _textEdit.appendString("                                       - modeli prenosne linije sa raspodijeljenim i koncentrisanim parametrima\n\n");
         _textEdit.appendString("1F transformatori - alat za proračun modela jednofaznog transformatora\n");
         _textEdit.appendString("                               - eksperimenti kratkog spoja i praznog hoda\n");
         _textEdit.appendString("                               - PI ekvivalent transformatora\n\n");

@@ -16,45 +16,36 @@ class ViewFormulasCanvas : public gui::Canvas
 {
 protected:
     gui::Shape _shapeRect;
-
-    gui::Symbol _symbol;
-    gui::Symbol _symbol2;
-    gui::Symbol _symbol3;
-    gui::Symbol _symbol4;
-    gui::Symbol _symbol5;
-    gui::Symbol _symbol6;/*
-    gui::Image _img;
-    gui::Symbol _symbol7;
-    gui::Symbol _symbol8;
-    gui::Symbol _symbol9;
-    gui::Symbol _symbol10;*/
+    gui::Image _img1;
+    gui::Image _img2;
+    gui::Image _img3;
+    gui::Image _img4;
+    gui::Image _img5;
 
     gui::Size _size;
     int _option;
 public:
     ViewFormulasCanvas()
     : Canvas({gui::InputDevice::Event::PrimaryClicks, gui::InputDevice::Event::SecondaryClicks, gui::InputDevice::Event::Zoom})
-    , _symbol(":y0y0")
-    , _symbol2(":y0d11")
-    , _symbol3(":y0d7")
-    , _symbol4(":y0y6")
-    , _symbol5(":y0d5")
-    , _symbol6(":y0d1")
+    , _img1(":f1")
+    , _img2(":f2")
+    , _img3(":f3")
+    , _img4(":f4")
+    , _img5(":f5")
     {
         gui::Rect r(0, 0, 2000, 2000);
-        float lw = 5;
+        float lw = 0;
         _shapeRect.createRect(r, lw);
 
         _option = 0;
-        setScale(1.5);
 
         enableResizeEvent(true);
     }
     
     bool getModelSize(gui::Size& modelSize) const override
     {
-        modelSize.width = 600;
-        modelSize.height = 200;
+        modelSize.width = 2000;
+        modelSize.height = 2000;
         return true;
     }
     
@@ -99,7 +90,25 @@ public:
     void onDraw(const gui::Rect& rect) override
     {
         _shapeRect.drawFillAndWire(td::ColorID::Black, td::ColorID::Black);
-        _syarray.at(_option).draw(_size.width*0.22, _size.height*0.15);
+        gui::Rect imgRect(1750, 500, 0, 0);
+        gui::Rect imgRect2(1750, 905, 0, 500);
+        gui::Rect imgRect3(1750, 402, 0, 0);
+        gui::Rect imgRect4(1750, 900, 0, 402);
+        switch (_option) {
+        case 0:
+            _img1.draw(imgRect);
+            _img2.draw(imgRect2);            
+            break;
+        case 1:
+            _img3.draw(imgRect);
+            break;
+        case 2:
+            _img4.draw(imgRect3);
+            _img5.draw(imgRect4);
+            break;
+        default:
+            break;
+        }
     }
     
     void toolbarZoomIn()
@@ -115,7 +124,5 @@ public:
         scale /= 2;
         setScale(scale);
     }
-
-    std::vector<gui::Symbol> _syarray{_symbol, _symbol2, _symbol3, _symbol4, _symbol5, _symbol6};
 
 };

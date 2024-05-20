@@ -11,6 +11,11 @@
 		<Res id="sestar" path = "Work/Common/Icons/Sestar64.png"/>
 		<Res id="settings" path = "Work/Common/Icons/SettingsBlue48.png"/>
 		<Res id="logo" path = "Work/CPProjects/SREES/res/images/logo.png"/>
+		<Res id="f1" path = "Work/CPProjects/SREES/res/images/f1.PNG"/>
+		<Res id="f2" path = "Work/CPProjects/SREES/res/images/f2.PNG"/>
+		<Res id="f3" path = "Work/CPProjects/SREES/res/images/f3.PNG"/>
+		<Res id="f4" path = "Work/CPProjects/SREES/res/images/f4.PNG"/>
+		<Res id="f5" path = "Work/CPProjects/SREES/res/images/f5.PNG"/>
 	</Images>
 	<Symbols>
 		<Res id="Xfmr4" path="Work/Common/Symbols/PSA/TwoWindingTransformer.xml"/>
@@ -20,6 +25,16 @@
 		<Res id="y0y6" path="Work/CPProjects/SREES/res/symbols/y0y6.xml"/>
 		<Res id="y0d5" path="Work/CPProjects/SREES/res/symbols/y0d5.xml"/>
 		<Res id="y0d1" path="Work/CPProjects/SREES/res/symbols/y0d1.xml"/>
+		<Res id="d1y0" path="Work/CPProjects/SREES/res/symbols/d1y0.xml"/>
+		<Res id="d11d11" path="Work/CPProjects/SREES/res/symbols/d11d11.xml"/>
+		<Res id="d11d7" path="Work/CPProjects/SREES/res/symbols/d11d7.xml"/>
+		<Res id="d1d11" path="Work/CPProjects/SREES/res/symbols/d1d11.xml"/>
+		<Res id="d11y6" path="Work/CPProjects/SREES/res/symbols/d11y6.xml"/>
+		<Res id="d11d5" path="Work/CPProjects/SREES/res/symbols/d11d5.xml"/>
+		<Res id="d1y6" path="Work/CPProjects/SREES/res/symbols/d1y6.xml"/>
+		<Res id="d11d3" path="Work/CPProjects/SREES/res/symbols/d11d3.xml"/>
+		<Res id="d11d1" path="Work/CPProjects/SREES/res/symbols/d11d1.xml"/>
+		<Res id="d11y0" path="Work/CPProjects/SREES/res/symbols/d11y0.xml"/>
 		<Res id="linija" path="Work/CPProjects/SREES/res/symbols/linija.xml"/>
 		<Res id="calc" path="Work/CPProjects/SREES/res/symbols/calc.xml"/>
 		<Res id="rect" path="Work/Common/Symbols/Shapes/rectangle.xml"/>
@@ -27,3 +42,4 @@
 		<Res id="circ" path="Work/Common/Symbols/Shapes/circle.xml"/>
 	</Symbols>
 </DevRes>
+

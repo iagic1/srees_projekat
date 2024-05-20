@@ -169,9 +169,14 @@ public:
             _textEdit.appendString("Vektorska grupa primara-sekundara: \n");
             _textEdit.appendString(t.at(_comboBox1.getSelectedIndex()).description);
 
-            _textEdit.appendString("\nNapomene:\n- Pretpostavljeno je zajedničko feromagnetno jezgro za sve namotaje primara i sekundara.");
-            if (t.at(_comboBox1.getSelectedIndex()).id==3) _textEdit.appendString("\n- Crvena boja označava da presjek sa ostalim granama ne podrazumijeva njihov spoj!");
-
+            _textEdit.appendString("\n\nNapomene:\n- Pretpostavljeno je zajedničko feromagnetno jezgro za sve namotaje primara i sekundara.");
+            switch (t.at(_comboBox1.getSelectedIndex()).id) {
+                case 3: case 10: case 12: case 13:
+                    _textEdit.appendString("\n- Crvena boja označava da presjek sa ostalim granama ne podrazumijeva njihov spoj!");
+                    break;
+                default:
+                    break;
+            }
             _ViewTransformators.updateOption(_comboBox1.getSelectedIndex());
             return true;
         }
@@ -306,6 +311,34 @@ public:
             td::cmplx y1 = find_y(1, Unn);
             td::cmplx y0 = find_y(0, Unn);
 
+            // step 3.0: ako je Dd abort mission
+            if (t.at(_comboBox1.getSelectedIndex()).type == 4) {
+                std::vector<std::vector<td::cmplx>> Y11(3, std::vector<td::cmplx>(3)), Y12 = Y11, Y21 = Y11, Y22 = Y11;
+                Y11 = { {0,0,0}, {0,1. / z1 + y1 / 2.,0}, {0,0,1. / z1 + y1 / 2.} };
+                Y12 = { {0,0,0}, {0,-1. / z1 - y1 / 2.,0}, {0,0,-1. / z1 - y1 / 2.} };
+                Y21 = Y11;
+                Y22 = Y12;
+
+                _z0y0.clean();
+                _z1y1.clean();
+                _pnz.clean();
+                _pnz_sim.clean();
+                _Y.clean();
+
+
+                writeComplex(_z0y0, z0, "z0 = ", "[Ohm]\n");
+                writeComplex(_z0y0, y0, "y0 = ", "[Ohm]");
+
+                writeComplex(_z1y1, z1, "z1 = ", "[Ohm]\n");
+                writeComplex(_z1y1, y1, "y1 = ", "[Ohm]");
+
+                writeMatrix(_Y, Y11, 1, "Y11 = ", "[S]");
+                writeMatrix(_Y, Y12, 1, "Y12 = ", "[S]");
+                writeMatrix(_Y, Y21, 1, "Y21 = ", "[S]");
+                writeMatrix(_Y, Y22, 1, "Y22 = ", "[S]");
+                return false;
+            }
+
             // step3: P, N, Z matrice
             int c = t.at(_comboBox1.getSelectedIndex()).clocknum;
             td::Decimal4 nn = _Unp.getValue().dec4Val() / _Uns.getValue().dec4Val();
@@ -332,7 +365,7 @@ public:
                     break;
             }
 
-            //// step4: prebacivanje modela u simetricne koordinate
+            // step4: prebacivanje modela u simetricne koordinate
             std::vector<std::vector<td::cmplx>> Ps, Ns, Zs, matrix_n;
             switch (t.at(_comboBox1.getSelectedIndex()).type) {
             case 1: case 2: // Yy, Yd
@@ -355,7 +388,7 @@ public:
                 break;
             }
 
-            //// step5: prebacivanje modela u fazne koordinate
+            // step5: prebacivanje modela u fazne koordinate
             std::vector<std::vector<td::cmplx>> Y11(3, std::vector<td::cmplx>(3)), Y12=Y11, Y21 = Y11, Y22 = Y11;
             Y11.at(0).at(0) = Zs.at(0).at(0);
             Y11.at(1).at(1) = Ps.at(0).at(0);
@@ -424,11 +457,20 @@ public:
         int type;
         int clocknum;
     };
-    std::vector<Transformer> t{{0, "Yy0", "Y0-Y0", 1, 0},
+    std::vector<Transformer> t{ {0, "Yy0", "Y0-Y0", 1, 0},
                                 {1, "Yd1", "Y0-D11", 2, 1},
                                 {2, "Yd5", "Y0-D7", 2, 5},
                                 {3, "Yy6", "Y0-Y6", 1, 6},
                                 {4, "Yd7", "Y0-D5", 2, 7},
-                                {4, "Yd11", "Y0-D1", 2, 11} };
-
+                                {5, "Yd11", "Y0-D1", 2, 11},
+                                {6, "Dd0", "D11-D11", 4, 0},
+                                {7, "Dy1", "D1-Y0", 3, 1},
+                                {8, "Dd2", "D1-D11", 4, 2},
+                                {9, "Dd4", "D11-D7", 4, 4},
+                                {10, "Dy5", "D11-Y6", 3, 5},
+                                {11, "Dd6", "D11-D5", 4, 6},
+                                {12, "Dy7", "D1-Y6", 3, 7},
+                                {13, "Dd8", "D11-D3", 4, 8},
+                                {14, "Dd10", "D11-D1", 4, 10},
+                                {15, "Dy11", "D11-Y0", 3, 11} };
 };

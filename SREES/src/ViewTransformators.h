@@ -22,11 +22,17 @@ protected:
     gui::Symbol _symbol3;
     gui::Symbol _symbol4;
     gui::Symbol _symbol5;
-    gui::Symbol _symbol6;/*
+    gui::Symbol _symbol6;
     gui::Symbol _symbol7;
     gui::Symbol _symbol8;
     gui::Symbol _symbol9;
-    gui::Symbol _symbol10;*/
+    gui::Symbol _symbol10;
+    gui::Symbol _symbol11;
+    gui::Symbol _symbol12;
+    gui::Symbol _symbol13;
+    gui::Symbol _symbol14;
+    gui::Symbol _symbol15;
+    gui::Symbol _symbol16;
 
     gui::Size _size;
     int _option;
@@ -39,11 +45,21 @@ public:
     , _symbol4(":y0y6")
     , _symbol5(":y0d5")
     , _symbol6(":y0d1")
+    , _symbol7(":d11d11")
+    , _symbol8(":d1y0")
+    , _symbol9(":d1d11")
+    , _symbol10(":d11d7")
+    , _symbol11(":d11y6")
+    , _symbol12(":d11d5")
+    , _symbol13(":d1y6")
+    , _symbol14(":d11d3")
+    , _symbol15(":d11d1")
+    , _symbol16(":d11y0")
     {
         gui::Rect r(0, 0, 600, 200);
         float lw = 5;
         _shapeRect.createRect(r, lw);
-
+        
         _option = 0;
         setScale(1.5);
 
@@ -115,6 +131,9 @@ public:
         setScale(scale);
     }
 
-    std::vector<gui::Symbol> _syarray{_symbol, _symbol2, _symbol3, _symbol4, _symbol5, _symbol6};
+    std::vector<gui::Symbol> _syarray{_symbol, _symbol2, _symbol3, _symbol4, 
+                                    _symbol5, _symbol6, _symbol7, _symbol8, 
+                                    _symbol9, _symbol10, _symbol11, _symbol12, 
+                                    _symbol13, _symbol14, _symbol15, _symbol16 };
 
 };
