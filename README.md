@@ -1,9 +1,11 @@
-# srees_projekat
-Aplikacija za računanje parametara transformatora, vodova/kablova
+# Aplikacija za računanje parametara transformatora, vodova/kablova
+
 
 IZVORI INFORMACIJA:
 https://drive.google.com/drive/folders/1qLmLwImqO_oc3IfQiqUCvNHCmYQY-s4R
+
 Dodatno -> NatID - za instalaciju (ovo radi u posljednoj verziji)
+
 Predavanja (BA06 pa nadalje) - okvirne upute kako funkcioniše
 
 ZA POKRETANJE:
