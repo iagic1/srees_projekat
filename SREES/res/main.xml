@@ -15,7 +15,7 @@
 		<Res id="f2" path = "Work/CPProjects/SREES/res/images/f2.PNG"/>
 		<Res id="f3" path = "Work/CPProjects/SREES/res/images/f3.PNG"/>
 		<Res id="f4" path = "Work/CPProjects/SREES/res/images/f4.PNG"/>
-		<Res id="f5" path = "Work/CPProjects/SREES/res/images/f5.PNG"/>
+		<Res id="f5" path = "Work/CPProjects/SREES/res/images/f5.png"/>
 	</Images>
 	<Symbols>
 		<Res id="Xfmr4" path="Work/Common/Symbols/PSA/TwoWindingTransformer.xml"/>

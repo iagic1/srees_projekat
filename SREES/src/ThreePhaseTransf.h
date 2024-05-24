@@ -221,6 +221,12 @@ public:
         return y;
     }
 
+    void elementMul(std::vector<std::vector<td::cmplx>> &M, int x) {
+        for (int i = 0; i < M.size(); i++)
+            for (int j = 0; j < M.at(0).size(); j++)
+                M.at(i).at(j) *= x;
+    }
+
     std::vector<std::vector<td::cmplx>> elementWise(std::vector<std::vector<td::cmplx>> M, std::vector<std::vector<td::cmplx>> N) {
         std::vector<std::vector<td::cmplx>> res=M;
         if (M.at(0).size() != N.at(0).size() || M.size() != N.size()) return { {{0}, {0}}, {{0}, {0}} };
@@ -259,14 +265,23 @@ public:
     void writeComplex(gui::TextEdit &txt, td::cmplx z, std::string var_name="", std::string unit = "") {
         td::Decimal4 x = z.real(), y=z.imag();
         if (var_name != "") txt.appendString(var_name);
+        
+        if (x == 0 && y == 0) {
+            txt.appendString("0 ");
+            if (unit != "") txt.appendString(unit);
+            return;
+        }
         txt.appendString(x.toString());
-        if (y >= 0) txt.appendString(" + ");
-        else {
+        if (y > 0) txt.appendString(" + ");
+        else if (y < 0) {
             txt.appendString(" - ");
             y = 0. - y;
         }
-        txt.appendString(y.toString());
-        txt.appendString("j ");
+        if (y > 0) {
+            txt.appendString(y.toString());
+            txt.appendString("j");
+        }
+        txt.appendString(" ");
         if (unit!="") txt.appendString(unit);
     }
 
@@ -319,6 +334,18 @@ public:
                 Y21 = Y11;
                 Y22 = Y12;
 
+                int c = t.at(_comboBox1.getSelectedIndex()).clocknum;
+                td::Decimal4 nn = _Unp.getValue().dec4Val() / _Uns.getValue().dec4Val();
+                td::cmplx n1(nn * cos(-3.14 / 6), nn * sin(-3.14 / 6)), n_conj1(n1.real(), -n1.imag());
+                td::cmplx n2(nn * cos((c - 1) * 3.14 / 6), nn * sin((c - 1) * 3.14 / 6)), n_conj2(n2.real(), -n2.imag());
+                std::vector<std::vector<td::cmplx>> mat = { {1. / nn, 0, 0,0,0,0}, {0, 1. / n1, 0,0,0,0 }, {0, 0, 1. / n_conj1,0,0,0},
+                                                            {0,0,0,1. / nn, 0, 0}, {0,0,0,0, 1. / n2, 0}, {0,0,0,0, 0, 1. / n_conj2} };
+
+                std::vector<std::vector<td::cmplx>> Y = { {0,0,0,0,0,0}, {0,1. / z1 + y1 / 2.,0,0,-1. / z1 - y1 / 2.,0}, {0,0,1. / z1 + y1 / 2.,0,0,-1. / z1 - y1 / 2.},
+                                                        {0,0,0,0,0,0}, {0,1. / z1 + y1 / 2.,0,0,-1. / z1 - y1 / 2.,0}, {0,0,1. / z1 + y1 / 2.,0,0,-1. / z1 - y1 / 2.}};
+                Y = matrixMultiplication(mat, Y);
+                Y = matrixMultiplication(Y, mat); // moze ista jer T transponovano je T opet svakako (mislim)
+
                 _z0y0.clean();
                 _z1y1.clean();
                 _pnz.clean();
@@ -332,10 +359,13 @@ public:
                 writeComplex(_z1y1, z1, "z1 = ", "[Ohm]\n");
                 writeComplex(_z1y1, y1, "y1 = ", "[Ohm]");
 
-                writeMatrix(_Y, Y11, 1, "Y11 = ", "[S]");
-                writeMatrix(_Y, Y12, 1, "Y12 = ", "[S]");
-                writeMatrix(_Y, Y21, 1, "Y21 = ", "[S]");
-                writeMatrix(_Y, Y22, 1, "Y22 = ", "[S]");
+                writeMatrix(_pnz_sim, Y11, 1, "Y11 = ", "[S]");
+                writeMatrix(_pnz_sim, Y12, 1, "Y12 = ", "[S]");
+                writeMatrix(_pnz_sim, Y21, 1, "Y21 = ", "[S]");
+                writeMatrix(_pnz_sim, Y22, 1, "Y22 = ", "[S]");
+
+
+                writeMatrix(_Y, Y, 2, "Y = ", "[S]");
                 return false;
             }
 

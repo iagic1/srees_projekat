@@ -98,14 +98,23 @@ public:
     void writeComplex(gui::TextEdit& txt, td::cmplx z, std::string var_name = "", std::string unit = "") {
         td::Decimal4 x = z.real(), y = z.imag();
         if (var_name != "") txt.appendString(var_name);
+
+        if (x == 0 && y == 0) {
+            txt.appendString("0 ");
+            if (unit != "") txt.appendString(unit);
+            return;
+        }
         txt.appendString(x.toString());
-        if (y >= 0) txt.appendString(" + ");
-        else {
+        if (y > 0) txt.appendString(" + ");
+        else if (y < 0) {
             txt.appendString(" - ");
             y = 0. - y;
         }
-        txt.appendString(y.toString());
-        txt.appendString("j ");
+        if (y > 0) {
+            txt.appendString(y.toString());
+            txt.appendString("j");
+        }
+        txt.appendString(" ");
         if (unit != "") txt.appendString(unit);
     }
 

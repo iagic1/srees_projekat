@@ -93,7 +93,7 @@ public:
         gui::Rect imgRect(1750, 500, 0, 0);
         gui::Rect imgRect2(1750, 905, 0, 500);
         gui::Rect imgRect3(1750, 402, 0, 0);
-        gui::Rect imgRect4(1750, 900, 0, 402);
+        gui::Rect imgRect4(1750, 925, 0, 402);
         switch (_option) {
         case 0:
             _img1.draw(imgRect);
